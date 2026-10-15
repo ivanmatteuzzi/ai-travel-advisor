@@ -1,0 +1,44 @@
+
+
+# ==========================================
+# API keys and secrets
+# ==========================================
+
+.env
+.env.*
+!.env.example
+*.env
+chiave 1510.env
+
+# ==========================================
+# Python virtual environments and cache
+# ==========================================
+
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# ==========================================
+# Local trip archive and personal data
+# ==========================================
+
+saved_trips.json
+
+# ==========================================
+# Vercel deployment
+# ==========================================
+
+.vercel/
+
+# ==========================================
+# Jupyter Notebook temporary files
+# ==========================================
+
+# Jupyter notebooks
+*.ipynb
+.ipynb_checkpoints/
+
+# Professor's separate demo project
+/model-deployment-demo---agent/
