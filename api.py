@@ -1,7 +1,7 @@
 
 import os
 from pathlib import Path
-from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 
 from dotenv import load_dotenv
 
@@ -47,6 +47,33 @@ app = FastAPI(
     title="AI Travel Advisor API",
     description="Backend for my AI Travel Advisor",
     version="1.0.0",
+)
+
+# CORS configuration
+
+frontend_origins = [
+    origin.strip().rstrip("/")
+    for origin in os.getenv("FRONTEND_ORIGINS", "").split(",")
+    if origin.strip()
+]
+
+# Origins used for local frontend development
+local_origins = [
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+]
+
+allowed_origins = list(dict.fromkeys(
+    frontend_origins + local_origins
+))
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=allowed_origins,
+    allow_credentials=False,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type"],
+    max_age=600,
 )
 
 
@@ -112,12 +139,3 @@ def chat_endpoint(request: ChatRequest) -> ChatResponse:
 
     return ChatResponse(**result)
 
-# Serve the web interface after the API routes have been registered.
-FRONTEND_DIR = BASE_DIR / "public"
-
-if FRONTEND_DIR.is_dir():
-    app.mount(
-        "/",
-        StaticFiles(directory=str(FRONTEND_DIR), html=True),
-        name="frontend",
-    )
