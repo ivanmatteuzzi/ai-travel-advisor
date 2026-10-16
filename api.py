@@ -1,6 +1,7 @@
 
 import os
 from pathlib import Path
+from fastapi.staticfiles import StaticFiles
 
 from dotenv import load_dotenv
 
@@ -110,3 +111,13 @@ def chat_endpoint(request: ChatRequest) -> ChatResponse:
         ) from error
 
     return ChatResponse(**result)
+
+# Serve the web interface after the API routes have been registered.
+FRONTEND_DIR = BASE_DIR / "public"
+
+if FRONTEND_DIR.is_dir():
+    app.mount(
+        "/",
+        StaticFiles(directory=str(FRONTEND_DIR), html=True),
+        name="frontend",
+    )
