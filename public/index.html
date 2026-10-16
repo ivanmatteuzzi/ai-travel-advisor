@@ -1,189 +1,250 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f5ef">
-  <title>Roam — AI Travel Advisor</title>
-
+  <meta name="theme-color" content="#f3f0e9">
+  <meta name="description" content="A thoughtful, personal AI travel planner for food, culture and places worth your time.">
+  <title>Roam — Travel, considered.</title>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
-
   <style>
     :root {
-      --bg: #f7f5ef;
-      --paper: #ffffff;
-      --ink: #20352c;
-      --muted: #6f7c74;
-      --green: #225c45;
-      --green-dark: #17432f;
-      --line: #e5e5db;
-      --accent: #e9a56d;
-      --soft: #edf2eb;
-      --shadow: 0 18px 55px rgba(28, 49, 38, .07);
+      color-scheme: light;
+      --canvas: #f3f0e9;
+      --paper: #fbfaf7;
+      --paper-deep: #eeebe3;
+      --ink: #242821;
+      --muted: #76766c;
+      --line: #dcd8ce;
+      --forest: #283d32;
+      --forest-hover: #1c3026;
+      --oxblood: #783b38;
+      --brass: #a48754;
+      --success: #426d50;
+      --danger: #8b3932;
+      --shadow: 0 16px 44px rgba(38, 40, 33, .055);
+      --radius: 17px;
     }
 
     * { box-sizing: border-box; }
 
+    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
-      background: var(--bg);
+      background: var(--canvas);
       color: var(--ink);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system,
-                   BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 15px;
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
     button, input, textarea, select { font: inherit; }
-
     button { cursor: pointer; }
 
     .topbar {
-      max-width: 1120px;
-      margin: auto;
-      padding: 24px 24px;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 23px 30px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 16px;
+      justify-content: space-between;
+      gap: 18px;
+      border-bottom: 1px solid rgba(55, 57, 48, .13);
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-weight: 850;
-      font-size: 1.15rem;
-      letter-spacing: -.04em;
-    }
-
-    .brand-mark {
-      width: 38px;
-      height: 38px;
-      border-radius: 13px;
-      display: grid;
-      place-items: center;
-      color: white;
-      background: var(--green);
-      font-size: 21px;
-    }
-
-    .status {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--muted);
-      font-size: .82rem;
-    }
-
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #7a9a82;
-    }
-
-    main {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 26px 24px 64px;
-    }
-
-    .hero {
-      text-align: center;
-      max-width: 720px;
-      margin: 12px auto 36px;
-    }
-
-    .eyebrow {
-      color: var(--green);
-      font-size: .77rem;
-      letter-spacing: .14em;
+      gap: 12px;
+      font-size: .97rem;
       font-weight: 800;
+      letter-spacing: .16em;
       text-transform: uppercase;
     }
 
-    h1 {
-      font-size: clamp(2.4rem, 6vw, 4.5rem);
-      letter-spacing: -.065em;
-      line-height: 1.05;
-      margin: 14px 0;
-      font-weight: 800;
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--forest);
+      color: var(--paper);
+      background: var(--forest);
+      display: grid;
+      place-items: center;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 21px;
+      border-radius: 50%;
     }
 
-    h1 span { color: var(--green); }
+    .brand-word { line-height: 1; }
+    .brand-word span { color: var(--oxblood); }
 
-    .hero p {
-      margin: 0 auto;
-      max-width: 570px;
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .top-note {
       color: var(--muted);
-      font-size: 1.06rem;
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: .77rem;
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      background: var(--brass);
+      border-radius: 50%;
+      flex: 0 0 auto;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 56px 30px 62px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(220px, .7fr);
+      gap: 35px;
+      align-items: end;
+      margin: 0 0 35px;
+    }
+
+    .eyebrow {
+      color: var(--oxblood);
+      font-size: .7rem;
+      font-weight: 800;
+      letter-spacing: .19em;
+      text-transform: uppercase;
+      margin-bottom: 17px;
+    }
+
+    h1 {
+      max-width: 720px;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.8rem, 6.4vw, 5.45rem);
+      font-weight: 400;
+      letter-spacing: -.065em;
+      line-height: .99;
+    }
+
+    h1 em {
+      color: var(--oxblood);
+      font-weight: 400;
+    }
+
+    .hero-copy {
+      max-width: 315px;
+      margin: 0 0 5px auto;
+      padding: 0 0 4px 20px;
+      border-left: 2px solid var(--brass);
+      color: var(--muted);
+      font-size: .94rem;
+    }
+
+    .hero-copy strong {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--ink);
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
     }
 
     .layout {
       display: grid;
-      grid-template-columns: minmax(0, 390px) minmax(0, 1fr);
-      gap: 24px;
+      grid-template-columns: minmax(300px, 370px) minmax(0, 1fr);
+      gap: 20px;
       align-items: start;
     }
 
     .card {
       background: var(--paper);
       border: 1px solid var(--line);
-      border-radius: 23px;
-      box-shadow: var(--shadow);
+      border-radius: var(--radius);
       overflow: hidden;
+      box-shadow: var(--shadow);
     }
 
-    .card-head { padding: 24px 25px 8px; }
+    .card-head {
+      padding: 24px 25px 19px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-index {
+      color: var(--brass);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: .85rem;
+      margin-bottom: 6px;
+    }
 
     .card-head h2 {
       margin: 0 0 5px;
-      font-size: 1.18rem;
-      letter-spacing: -.03em;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.55rem;
+      font-weight: 400;
+      letter-spacing: -.035em;
     }
 
     .card-head p {
       margin: 0;
       color: var(--muted);
-      font-size: .88rem;
+      font-size: .84rem;
     }
 
-    .form-body { padding: 18px 25px 25px; }
-
+    .form-body { padding: 23px 25px 25px; }
     .field { margin-bottom: 19px; }
 
     label, .field-title {
       display: block;
-      font-size: .86rem;
-      font-weight: 700;
+      font-size: .77rem;
+      font-weight: 750;
+      letter-spacing: .025em;
       margin-bottom: 7px;
     }
 
     .hint {
-      font-weight: 400;
-      font-size: .78rem;
       color: var(--muted);
+      font-weight: 400;
+      font-size: .75rem;
+      letter-spacing: 0;
     }
 
-    input[type="text"], input[type="number"], select, textarea {
+    input[type="text"], select, textarea {
       width: 100%;
-      color: var(--ink);
-      border: 1px solid var(--line);
-      background: #fcfcf9;
-      border-radius: 11px;
       padding: 12px 13px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffefa;
+      color: var(--ink);
       outline: none;
-      transition: border-color .15s, box-shadow .15s;
+      transition: border-color .16s, box-shadow .16s;
     }
+
+    input::placeholder, textarea::placeholder { color: #a09e93; }
 
     input:focus, select:focus, textarea:focus {
-      border-color: #7eaa90;
-      box-shadow: 0 0 0 3px rgba(34, 92, 69, .09);
+      border-color: var(--forest);
+      box-shadow: 0 0 0 3px rgba(40, 61, 50, .09);
     }
 
-    textarea { min-height: 84px; resize: vertical; }
+    textarea { min-height: 82px; resize: vertical; }
 
     .two-col {
       display: grid;
@@ -194,273 +255,300 @@
     .choices {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: 7px;
     }
 
     .choice {
       display: flex;
       align-items: center;
       gap: 8px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 10px;
-      font-weight: 500;
-      font-size: .82rem;
       margin: 0;
+      padding: 9px 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-size: .76rem;
+      font-weight: 500;
+      letter-spacing: 0;
       cursor: pointer;
       transition: background .15s, border-color .15s;
     }
 
     .choice:has(input:checked) {
-      background: var(--soft);
-      border-color: #9cb8a4;
+      background: #e9ede6;
+      border-color: #a4b1a4;
     }
 
-    .choice input { accent-color: var(--green); }
+    .choice input {
+      margin: 0;
+      accent-color: var(--forest);
+    }
 
     .primary, .secondary {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 9px;
-      border: none;
-      border-radius: 12px;
-      padding: 13px 17px;
+      gap: 10px;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: .82rem;
       font-weight: 750;
       transition: background .15s, transform .15s;
     }
 
     .primary {
-      color: white;
-      background: var(--green);
       width: 100%;
+      color: #fffdf8;
+      background: var(--forest);
+      border: 1px solid var(--forest);
     }
 
-    .primary:hover { background: var(--green-dark); }
+    .primary:hover { background: var(--forest-hover); }
     .primary:active { transform: translateY(1px); }
-
-    .primary:disabled {
-      opacity: .6;
-      cursor: wait;
-    }
+    .primary:disabled { opacity: .62; cursor: wait; }
 
     .secondary {
-      color: var(--green);
-      background: var(--soft);
+      color: var(--forest);
+      background: transparent;
+      border: 1px solid var(--line);
     }
 
-    .results { min-height: 250px; }
+    .secondary:hover { background: var(--paper-deep); }
+
+    .results { min-height: 470px; }
 
     .empty-state {
+      display: flex;
+      min-height: 470px;
+      padding: 45px 32px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
-      padding: 65px 28px;
     }
 
     .empty-icon {
-      width: 62px;
-      height: 62px;
+      width: 58px;
+      height: 58px;
       display: grid;
       place-items: center;
-      margin: 0 auto 15px;
-      background: var(--soft);
-      border-radius: 20px;
-      font-size: 28px;
+      margin: 0 auto 18px;
+      border: 1px solid #c5b79b;
+      border-radius: 50%;
+      color: var(--oxblood);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 25px;
     }
 
-    .empty-state h3 { margin: 0 0 5px; }
+    .empty-state h3 {
+      margin: 0 0 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.75rem;
+      font-weight: 400;
+      letter-spacing: -.04em;
+    }
+
     .empty-state p {
-      max-width: 300px;
+      max-width: 330px;
+      margin: 0;
       color: var(--muted);
-      font-size: .9rem;
-      margin: auto;
+      font-size: .87rem;
     }
 
     .result-top {
-      padding: 20px 24px;
-      border-bottom: 1px solid var(--line);
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 12px;
+      justify-content: space-between;
+      gap: 13px;
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--line);
+      background: #f7f5ef;
     }
 
-    .result-top strong { font-size: .92rem; }
+    .result-top strong {
+      font-size: .75rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
 
-    .result-content { padding: 25px; }
+    .result-content { padding: 23px 25px 8px; }
 
     .message {
-      padding: 16px 18px;
-      border-radius: 15px;
       margin-bottom: 18px;
+      padding: 16px 18px;
+      border-radius: 10px;
       overflow-wrap: anywhere;
     }
 
     .message.user {
-      background: var(--soft);
-      margin-left: 35px;
+      margin-left: 34px;
+      background: #e9ede6;
+      border: 1px solid #dce4d9;
     }
 
     .message.assistant {
-      background: #fbfaf6;
+      margin-right: 8px;
+      background: #fffefa;
       border: 1px solid var(--line);
-      margin-right: 10px;
     }
 
     .message-label {
-      font-size: .74rem;
-      color: var(--muted);
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .08em;
       margin-bottom: 9px;
+      color: var(--muted);
+      font-size: .66rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
     }
 
-    .markdown {
-      font-size: .94rem;
-      line-height: 1.75;
-    }
+    .markdown { font-size: .91rem; line-height: 1.75; }
 
     .markdown h1, .markdown h2, .markdown h3 {
-      text-align: left;
-      letter-spacing: -.035em;
+      margin: 1.45em 0 .6em;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 400;
       line-height: 1.25;
-      margin: 1.5em 0 .65em;
+      letter-spacing: -.035em;
     }
 
-    .markdown h1 { font-size: 1.6rem; }
-    .markdown h2 { font-size: 1.3rem; }
+    .markdown h1 { font-size: 1.65rem; }
+    .markdown h2 { font-size: 1.32rem; }
     .markdown h3 { font-size: 1.08rem; }
     .markdown h1:first-child, .markdown h2:first-child { margin-top: 0; }
-
-    .markdown a { color: var(--green); overflow-wrap: anywhere; }
-    .markdown table { border-collapse: collapse; width: 100%; display: block; overflow-x: auto; }
-    .markdown th, .markdown td {
-      padding: 9px 11px;
-      border: 1px solid var(--line);
-      text-align: left;
-    }
-    .markdown th { background: var(--soft); }
-    .markdown blockquote {
-      margin-left: 0;
-      padding-left: 14px;
-      border-left: 3px solid var(--accent);
-      color: var(--muted);
-    }
-    .markdown pre {
-      overflow-x: auto;
-      background: #f0efe8;
-      padding: 12px;
-      border-radius: 9px;
-    }
+    .markdown a { color: var(--oxblood); overflow-wrap: anywhere; }
+    .markdown a:hover { text-decoration-thickness: 2px; }
+    .markdown ul, .markdown ol { padding-left: 1.35rem; }
+    .markdown li { margin: .32rem 0; }
+    .markdown table { display: block; width: 100%; overflow-x: auto; border-collapse: collapse; }
+    .markdown th, .markdown td { padding: 9px 11px; border: 1px solid var(--line); text-align: left; }
+    .markdown th { background: #eeebe3; }
+    .markdown blockquote { margin-left: 0; padding-left: 14px; border-left: 2px solid var(--brass); color: var(--muted); }
+    .markdown pre { overflow-x: auto; padding: 12px; border-radius: 8px; background: #eeebe3; }
 
     .meta {
       display: flex;
-      gap: 8px;
       flex-wrap: wrap;
+      gap: 7px;
       padding: 0 25px 20px;
     }
 
     .pill {
-      background: var(--soft);
-      color: var(--green);
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 9px;
+      border: 1px solid var(--line);
       border-radius: 100px;
-      padding: 5px 10px;
-      font-size: .75rem;
+      background: #f7f5ef;
+      color: var(--muted);
+      font-size: .68rem;
       font-weight: 700;
     }
 
-    .pill.warning { background: #fff0df; color: #8d4c18; }
+    .pill.warning { color: var(--danger); border-color: #dec2bd; background: #f8ebe8; }
 
     .followup {
-      padding: 20px 24px 24px;
+      padding: 19px 24px 23px;
       border-top: 1px solid var(--line);
+      background: #f7f5ef;
     }
 
     .followup label { margin-bottom: 9px; }
-
-    .followup-row {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 9px;
-      align-items: end;
-    }
-
-    .followup textarea { min-height: 48px; max-height: 150px; }
+    .followup-row { display: grid; grid-template-columns: 1fr auto; gap: 9px; align-items: end; }
+    .followup textarea { min-height: 46px; max-height: 150px; }
+    .followup .primary { width: auto; min-width: 94px; }
 
     .error {
-      background: #fff0ef;
-      color: #8d3029;
-      padding: 13px;
-      border-radius: 10px;
-      margin-top: 14px;
-      font-size: .88rem;
+      margin-top: 13px;
+      padding: 12px 13px;
+      border: 1px solid #e4c4bf;
+      border-radius: 8px;
+      background: #f8ebe8;
+      color: var(--danger);
+      font-size: .84rem;
     }
 
     .hidden { display: none !important; }
 
     footer {
-      text-align: center;
+      padding: 27px 0 0;
       color: var(--muted);
-      font-size: .8rem;
-      padding: 35px 0 0;
+      font-size: .72rem;
+      text-align: center;
     }
 
-    @media (max-width: 820px) {
+    footer span { color: var(--oxblood); }
+
+    @media (max-width: 850px) {
+      main { padding-top: 39px; }
+      .hero { grid-template-columns: 1fr; gap: 22px; }
+      .hero-copy { max-width: 450px; margin: 0; }
       .layout { grid-template-columns: 1fr; }
-      .hero { margin-top: 0; }
+      .results { min-height: 300px; }
+      .empty-state { min-height: 300px; }
     }
 
-    @media (max-width: 480px) {
-      main { padding: 15px 14px 40px; }
-      .topbar { padding: 17px 15px; }
-      .card-head, .form-body { padding-left: 18px; padding-right: 18px; }
-      .result-content { padding: 16px; }
-      .result-top { padding: 16px; }
-      .two-col { grid-template-columns: 1fr 1fr; }
-      .followup { padding: 16px; }
+    @media (max-width: 520px) {
+      .topbar { padding: 17px 17px; }
+      .top-note { display: none; }
+      main { padding: 33px 13px 42px; }
+      .hero { margin-bottom: 25px; }
+      h1 { font-size: clamp(2.65rem, 12vw, 4rem); }
+      .card-head, .form-body { padding-left: 17px; padding-right: 17px; }
+      .result-content { padding: 17px 14px 5px; }
+      .result-top { padding: 14px; }
+      .followup { padding: 15px; }
       .followup-row { grid-template-columns: 1fr; }
-      .message.user { margin-left: 12px; }
+      .followup .primary { width: 100%; }
+      .message.user { margin-left: 8px; }
       .message.assistant { margin-right: 0; }
+      .meta { padding: 0 14px 16px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
     }
   </style>
 </head>
-
 <body>
   <header class="topbar">
     <div class="brand">
-      <div class="brand-mark">✳</div>
-      <span>roam<span style="color:#e9a56d">.</span></span>
+      <div class="brand-mark" aria-hidden="true">r</div>
+      <span class="brand-word">ROAM<span>.</span></span>
     </div>
-    <div class="status">
-      <span class="dot" id="healthDot"></span>
-      <span id="healthText">Checking service…</span>
+    <div class="topbar-right">
+      <div class="top-note">Travel, considered.</div>
+      <div class="status" role="status" aria-live="polite">
+        <span class="dot" id="healthDot"></span>
+        <span id="healthText">Checking service…</span>
+      </div>
     </div>
   </header>
 
   <main>
     <section class="hero">
-      <div class="eyebrow">Your personal travel planner</div>
-      <h1>Your next trip,<br><span>thoughtfully planned.</span></h1>
-      <p>A practical, personalized itinerary shaped around what you love, how long you have, and what you want to spend.</p>
+      <div>
+        <div class="eyebrow">A personal travel advisor</div>
+        <h1>Go somewhere.<br><em>Feel more.</em></h1>
+      </div>
+      <p class="hero-copy"><strong>Less checklist. More connection.</strong>Build a thoughtful itinerary around places, culture and food worth your time—at a pace and budget that suit you.</p>
     </section>
 
     <div class="layout">
       <section class="card">
         <div class="card-head">
-          <h2>Let's plan your trip</h2>
-          <p>Tell us a little about the trip you have in mind.</p>
+          <div class="section-index">01 / The brief</div>
+          <h2>Plan your next trip</h2>
+          <p>A few details help us make it personal.</p>
         </div>
 
         <form id="tripForm" class="form-body">
           <div class="field">
-            <label for="destination">Where do you want to go?</label>
-            <input id="destination" type="text" maxlength="150"
-                   placeholder="e.g. Bologna, Japan, Portugal" required>
+            <label for="destination">Destination</label>
+            <input id="destination" type="text" maxlength="150" placeholder="Bologna, Japan, Portugal…" required>
           </div>
 
           <div class="two-col">
             <div class="field">
-              <label for="days">Trip length</label>
+              <label for="days">Duration</label>
               <select id="days">
                 <option value="1">1 day</option>
                 <option value="2" selected>2 days</option>
@@ -474,70 +562,63 @@
               </select>
             </div>
             <div class="field">
-              <label for="budget">Budget</label>
+              <label for="budget">Travel style</label>
               <select id="budget">
-                <option value="budget-conscious">Budget-friendly</option>
-                <option value="moderate" selected>Moderate</option>
-                <option value="comfortable">Comfortable</option>
-                <option value="flexible">Flexible</option>
+                <option value="budget-conscious">Considered budget</option>
+                <option value="moderate" selected>Comfortable balance</option>
+                <option value="comfortable">A little extra comfort</option>
+                <option value="flexible">Open-ended</option>
               </select>
             </div>
           </div>
 
           <div class="field">
-            <label for="dates">Travel dates <span class="hint">(optional)</span></label>
-            <input id="dates" type="text" maxlength="100"
-                   placeholder="e.g. 12–14 June 2027">
+            <label for="dates">Travel dates <span class="hint">/ optional</span></label>
+            <input id="dates" type="text" maxlength="100" placeholder="e.g. 12–14 June 2027">
           </div>
 
           <div class="field">
-            <div class="field-title">What are you into?</div>
+            <div class="field-title">What matters to you?</div>
             <div class="choices">
-              <label class="choice"><input type="checkbox" name="interest" value="food" checked> Food</label>
-              <label class="choice"><input type="checkbox" name="interest" value="museums and culture"> Museums & culture</label>
-              <label class="choice"><input type="checkbox" name="interest" value="nature and hiking"> Nature & hiking</label>
-              <label class="choice"><input type="checkbox" name="interest" value="beaches"> Beaches</label>
+              <label class="choice"><input type="checkbox" name="interest" value="food" checked> Food & wine</label>
+              <label class="choice"><input type="checkbox" name="interest" value="museums and culture"> Art & culture</label>
+              <label class="choice"><input type="checkbox" name="interest" value="nature and hiking"> Nature</label>
+              <label class="choice"><input type="checkbox" name="interest" value="beaches"> Coast & beaches</label>
               <label class="choice"><input type="checkbox" name="interest" value="nightlife"> Nightlife</label>
-              <label class="choice"><input type="checkbox" name="interest" value="shopping"> Shopping</label>
-              <label class="choice"><input type="checkbox" name="interest" value="history and architecture"> History</label>
+              <label class="choice"><input type="checkbox" name="interest" value="shopping"> Design & shops</label>
+              <label class="choice"><input type="checkbox" name="interest" value="history and architecture"> Architecture</label>
               <label class="choice"><input type="checkbox" name="interest" value="local experiences"> Local life</label>
             </div>
           </div>
 
           <div class="field">
-            <label for="notes">Anything else? <span class="hint">(optional)</span></label>
-            <textarea id="notes" maxlength="1500"
-                      placeholder="Dietary needs, travel style, people travelling…"></textarea>
+            <label for="notes">A few more details <span class="hint">/ optional</span></label>
+            <textarea id="notes" maxlength="1500" placeholder="Dietary needs, who is travelling, places to avoid…"></textarea>
           </div>
 
-          <button class="primary" type="submit" id="planButton">
-            Build my itinerary <span aria-hidden="true">↗</span>
-          </button>
+          <button class="primary" type="submit" id="planButton">Create my itinerary <span aria-hidden="true">↗</span></button>
           <div id="formError" class="error hidden" role="alert"></div>
         </form>
       </section>
 
       <section class="card results" id="results">
         <div class="empty-state" id="emptyState">
-          <div class="empty-icon">✈</div>
-          <h3>Your next adventure starts here.</h3>
-          <p>Share your destination and interests. Your personalized itinerary will appear here.</p>
+          <div class="empty-icon" aria-hidden="true">✳</div>
+          <h3>Good trips stay with you.</h3>
+          <p>Tell us where you want to go and what you enjoy. Your itinerary will take shape here.</p>
         </div>
 
         <div id="resultArea" class="hidden">
           <div class="result-top">
-            <strong>Your travel plan</strong>
-            <button type="button" class="secondary" id="newTripButton">New trip ↗</button>
+            <strong>01 / Your itinerary</strong>
+            <button type="button" class="secondary" id="newTripButton">Start over ↗</button>
           </div>
           <div id="conversation" class="result-content" aria-live="polite"></div>
           <div id="meta" class="meta"></div>
-
           <form id="followupForm" class="followup hidden">
-            <label for="followup">Want to refine your itinerary?</label>
+            <label for="followup">Refine the plan</label>
             <div class="followup-row">
-              <textarea id="followup" maxlength="4000"
-                        placeholder="e.g. Make it cheaper, add museums…"
-                        required></textarea>
+              <textarea id="followup" maxlength="4000" placeholder="Make it less expensive, add more museums…" required></textarea>
               <button class="primary" type="submit" id="sendButton">Send ↗</button>
             </div>
           </form>
@@ -545,9 +626,7 @@
       </section>
     </div>
 
-    <footer>
-      Roam · AI Travel Advisor · Plans are estimates; verify prices and opening hours before booking.
-    </footer>
+    <footer>ROAM<span>.</span> · A considered travel plan, not a booking confirmation. Verify prices and opening hours before you go.</footer>
   </main>
 
   <script>
@@ -566,28 +645,28 @@
     const followup = document.getElementById("followup");
     const sendButton = document.getElementById("sendButton");
 
+    const chatError = document.createElement("div");
+    chatError.id = "chatError";
+    chatError.className = "error hidden";
+    followupForm.appendChild(chatError);
+
     async function checkHealth() {
       const label = document.getElementById("healthText");
       const dot = document.getElementById("healthDot");
-
       try {
         const response = await fetch("/health");
         if (!response.ok) throw new Error("Service unavailable");
         label.textContent = "Service online";
-        dot.style.background = "#5b9b70";
+        dot.style.background = "#426d50";
       } catch (_) {
         label.textContent = "Service unavailable";
-        dot.style.background = "#c45b4c";
+        dot.style.background = "#8b3932";
       }
     }
 
     function escapeHtml(text) {
       return String(text).replace(/[&<>"']/g, character => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
       })[character]);
     }
 
@@ -604,16 +683,12 @@
 
       const label = document.createElement("div");
       label.className = "message-label";
-      label.textContent = role === "user" ? "You" : "Roam · Travel Advisor";
+      label.textContent = role === "user" ? "Your request" : "ROAM / Travel advisor";
 
       const body = document.createElement("div");
       body.className = "markdown";
-
-      if (role === "assistant") {
-        body.innerHTML = markdownHtml(text);
-      } else {
-        body.textContent = text;
-      }
+      if (role === "assistant") body.innerHTML = markdownHtml(text);
+      else body.textContent = text;
 
       wrapper.append(label, body);
       conversation.appendChild(wrapper);
@@ -642,15 +717,14 @@
       if (Number.isFinite(data.total_tokens)) {
         const tokenPill = document.createElement("span");
         tokenPill.className = "pill";
-        tokenPill.textContent = data.total_tokens.toLocaleString() + " tokens";
+        tokenPill.textContent = data.total_tokens.toLocaleString() + " tokens used";
         meta.appendChild(tokenPill);
       }
 
       const validation = data.budget_validation;
       if (validation && validation.status) {
         const budgetPill = document.createElement("span");
-        budgetPill.className = "pill" +
-          (validation.status === "mismatch" ? " warning" : "");
+        budgetPill.className = "pill" + (validation.status === "mismatch" ? " warning" : "");
         const labels = {
           consistent: "Budget arithmetic checked",
           mismatch: "Budget total needs review",
@@ -667,10 +741,10 @@
       busy = true;
       planButton.disabled = true;
       sendButton.disabled = true;
-      planButton.textContent = "Planning your trip…";
-      sendButton.textContent = "Thinking…";
+      planButton.textContent = "Putting the plan together…";
+      sendButton.textContent = "Working…";
       hideError();
-      hideError(document.getElementById("chatError"));
+      hideError(chatError);
 
       if (isNewTrip) {
         previousResponseId = null;
@@ -682,17 +756,15 @@
       addMessage("user", message);
       showResults();
 
-      const thinking = document.createElement("div");
+      const thinking = document.createElement("article");
       thinking.className = "message assistant";
-      thinking.textContent = "Putting your travel plan together…";
+      thinking.textContent = "Considering the details and assembling your itinerary…";
       thinking.id = "thinking";
       conversation.appendChild(thinking);
 
       try {
         const payload = { message };
-        if (previousResponseId) {
-          payload.previous_response_id = previousResponseId;
-        }
+        if (previousResponseId) payload.previous_response_id = previousResponseId;
 
         const response = await fetch("/chat", {
           method: "POST",
@@ -702,40 +774,32 @@
 
         const data = await response.json();
         thinking.remove();
-
-        if (!response.ok) {
-          throw new Error(data.detail || "The request could not be completed.");
-        }
+        if (!response.ok) throw new Error(data.detail || "The request could not be completed.");
 
         addMessage("assistant", data.answer || "No answer was returned.");
         if (data.response_id) previousResponseId = data.response_id;
         updateMetadata(data);
-
       } catch (error) {
         thinking.remove();
-        const target = isNewTrip ? formError : document.getElementById("chatError");
-        showError(error.message || "Unable to reach the API. Please try again.", target);
+        showError(error.message || "Unable to reach the API. Please try again.", isNewTrip ? formError : chatError);
       } finally {
         busy = false;
         planButton.disabled = false;
         sendButton.disabled = false;
-        planButton.innerHTML = 'Build my itinerary <span aria-hidden="true">↗</span>';
+        planButton.innerHTML = 'Create my itinerary <span aria-hidden="true">↗</span>';
         sendButton.textContent = "Send ↗";
       }
     }
 
     form.addEventListener("submit", async event => {
       event.preventDefault();
-
       const destination = document.getElementById("destination").value.trim();
       const days = document.getElementById("days").value;
       const dates = document.getElementById("dates").value.trim();
       const budget = document.getElementById("budget").value;
       const notes = document.getElementById("notes").value.trim();
-
-      const interests = Array.from(
-        document.querySelectorAll('input[name="interest"]:checked')
-      ).map(input => input.value);
+      const interests = Array.from(document.querySelectorAll('input[name="interest"]:checked'))
+        .map(input => input.value);
 
       if (!destination) {
         showError("Please enter a destination.");
@@ -747,11 +811,10 @@
         "Interests: " + (interests.length ? interests.join(", ") : "general sightseeing") + ".\n" +
         "Budget style: " + budget + ".\n" +
         "Include a trip title, trip summary, day-by-day itinerary, practical travel tips, " +
-        "and an itemized estimated budget. Check current travel information where relevant.";
+        "and an itemized estimated budget. Use web search for current information when relevant.";
 
       if (dates) message += "\nTravel dates or period: " + dates + ".";
       if (notes) message += "\nAdditional preferences and constraints: " + notes;
-
       await sendMessage(message, true);
     });
 
@@ -759,7 +822,6 @@
       event.preventDefault();
       const message = followup.value.trim();
       if (!message) return;
-
       followup.value = "";
       await sendMessage(message, false);
     });
@@ -772,15 +834,10 @@
       emptyState.classList.remove("hidden");
       followupForm.classList.add("hidden");
       hideError();
-      hideError(document.getElementById("chatError"));
+      hideError(chatError);
       document.getElementById("destination").focus();
-      document.getElementById("results").scrollIntoView({ behavior: "smooth" });
+      results.scrollIntoView({ behavior: "smooth", block: "start" });
     });
-
-    const chatError = document.createElement("div");
-    chatError.id = "chatError";
-    chatError.className = "error hidden";
-    followupForm.appendChild(chatError);
 
     checkHealth();
   </script>
