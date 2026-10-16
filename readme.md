@@ -1,3 +1,11 @@
+
+## Live Demo
+
+- **Frontend:** https://ai-travel-advisor-frontend.vercel.app/
+- **Backend API:** https://ai-travel-advisor-seven.vercel.app/
+- **API documentation:** https://ai-travel-advisor-seven.vercel.app/docs
+- **GitHub repository:** https://github.com/ivanmatteuzzi/ai-travel-advisor
+
 # AI Travel Advisor API
 
 An AI-powered travel planning backend built with Python, FastAPI, and the OpenAI API.
