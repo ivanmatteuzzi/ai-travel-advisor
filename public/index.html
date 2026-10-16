@@ -630,6 +630,13 @@
   </main>
 
   <script>
+    
+const API_BASE_URL = ["localhost", "127.0.0.1"].includes(
+  window.location.hostname
+)
+  ? "http://127.0.0.1:8000"
+  : "https://ai-travel-advisor-seven.vercel.app";
+
     let previousResponseId = null;
     let busy = false;
 
@@ -654,7 +661,7 @@
       const label = document.getElementById("healthText");
       const dot = document.getElementById("healthDot");
       try {
-        const response = await fetch("/health");
+        const response = await fetch(`${API_BASE_URL}/health`);
         if (!response.ok) throw new Error("Service unavailable");
         label.textContent = "Service online";
         dot.style.background = "#426d50";
@@ -766,7 +773,7 @@
         const payload = { message };
         if (previousResponseId) payload.previous_response_id = previousResponseId;
 
-        const response = await fetch("/chat", {
+        const response = await fetch(`${API_BASE_URL}/chat`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
